@@ -43,45 +43,27 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>GoogleSlide Comment Stream</p>
+        <h1>GoogleSlide Comment Stream</h1>
+        <p>スライド側とユーザーツール側両方で「Start」をクリックしてください</p>
         <form>
-          <label htmlFor="color">Comment Color</label>
+          <label htmlFor="color">Comment Color: </label>
           <input id="color" type="color" onChange={handleColorChange} value={config?.color}></input>
           <br />
 
-          <label htmlFor="font">Comment Font</label>
+          <label htmlFor="font">Comment Font: </label>
           <input id="font" type="text" size={5} onChange={handleFontChange} value={config?.font}></input>
           <br />
 
-          <label htmlFor="speed">Comment Speed(px/animation frame)</label>
-          <input id="speed" type="number" size={4} onChange={handleSpeedPxChange} value={config?.speedPx}></input>
+          <label htmlFor="speed">Speed(px/frame): </label>
+          <input id="speed" type="number" onChange={handleSpeedPxChange} value={config?.speedPx}></input>
           <br />
 
-          <label htmlFor="size">Comment Size(em)</label>
+          <label htmlFor="size">Size(em): </label>
           <input id="size" type="number" onChange={handleSizeEmChange} value={config?.sizeEm}></input>
           <br />
         </form>
 
         <button onClick={handleClick}>Start</button>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
       </header>
     </div>
   )

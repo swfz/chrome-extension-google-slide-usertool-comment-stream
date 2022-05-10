@@ -45,3 +45,13 @@ button {
 input[type='number']{
   width: 50px;
 }
+
+input[type='text']{
+  width: 50px;
+}
+
+label{
+  display: inline-block;
+  text-align: right;
+  width: 150px;
+}
