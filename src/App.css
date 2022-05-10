@@ -41,3 +41,7 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+input[type='number']{
+  width: 50px;
+}
