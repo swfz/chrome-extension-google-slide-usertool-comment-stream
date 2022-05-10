@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
-import logo from './logo.svg'
+import { ChangeEvent, useEffect, useState } from 'react'
 import './App.css'
-
 
 type ToolConfig = {
   color?: string;
@@ -13,25 +11,29 @@ type ToolConfig = {
 function App() {
   const [config, setConfig] = useState<ToolConfig>()
 
-  const handleColorChange = (event) => {
+  const handleColorChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfig((prev) => ({...prev, color: event.target.value}))
   }
-  const handleFontChange = (event) => {
+  const handleFontChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfig((prev) => ({...prev, font: event.target.value}))
   }
-  const handleSpeedPxChange = (event) => {
-    setConfig((prev) => ({...prev, speedPx: event.target.value}))
+  const handleSpeedPxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setConfig((prev) => ({...prev, speedPx: parseInt(event.target.value)}))
   }
-  const handleSizeEmChange = (event) => {
-    setConfig((prev) => ({...prev, sizeEm: event.target.value}))
+  const handleSizeEmChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setConfig((prev) => ({...prev, sizeEm: parseInt(event.target.value)}))
   }
 
   const handleClick = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
+    if(tab.id === undefined) {
+      return
+    }
+
     chrome.storage.sync.set({config});
 
-    chrome.tabs.sendMessage(tab.id, {message: 'hoge'}, (res) => console.log('response', res));
+    chrome.tabs.sendMessage(tab.id, {config}, (res) => console.log('response', res));
   }
 
   useEffect(() => {

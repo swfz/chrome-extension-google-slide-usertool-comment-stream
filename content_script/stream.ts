@@ -1,26 +1,15 @@
-const sample1 = () => {
-  console.log('content script stream build by vite')
-}
-
-sample1()
-
+console.log('loaded google slide comment stream')
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   chrome.storage.sync.get(['config'], ({config}) => {
-    console.log('content_script');
-    console.log(message);
-    console.log(sender);
-    console.log(sendResponse);
-
     const broadcastChannel = new BroadcastChannel('comment_channel');
 
     const addComment = (comment: string) => {
       const element = document.createElement("p");
       element.innerText = comment;
 
-      const boxElement = document.querySelector('.punch-present-iframe').contentWindow.document.querySelector('.punch-viewer-content');
-
-      console.log('called addComment');
+      const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
+      const boxElement = iframeElement.contentWindow.document.querySelector('.punch-viewer-content');
 
       boxElement.appendChild(element);
 
