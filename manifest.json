@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Rpce React Vite Example",
   "version": "1.0.0",
-  "permissions": ["storage", "activeTab", "scripting", "downloads"],
+  "permissions": ["storage", "activeTab", "scripting"],
   "background": {
     "service_worker": "background/background.ts"
   },
@@ -16,5 +16,19 @@
       "js": ["content_script/subscribe.ts"]
     }
   ],
-  "action": { "default_popup": "index.html" }
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "images/16x16.png",
+      "32": "images/32x32.png",
+      "48": "images/48x48.png",
+      "128": "images/128x128.png"
+    }
+  },
+  "icons": {
+    "16": "images/16x16.png",
+    "32": "images/32x32.png",
+    "48": "images/48x48.png",
+    "128": "images/128x128.png"
+  }
 }
