@@ -1,6 +1,7 @@
 console.log('loaded google slide comment stream')
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log('comment stream started.')
   chrome.storage.sync.get(['config'], ({config}) => {
     const broadcastChannel = new BroadcastChannel('comment_channel');
 
@@ -27,8 +28,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       const windowWidth = document.body.clientWidth;
       element.style.transform = `translateX(${windowWidth}px)`;
       element.style.color = textColor;
-      element.style.font = textFont;
-      element.style['font-size'] = `${fontSize}em`;
+      element.style.fontFamily = textFont;
+      element.style.fontSize = `${fontSize}em`;
       element.style.position = 'absolute';
       element.style.top = `${elementTop}px`;
       element.style.whiteSpace = 'nowrap';

@@ -10,11 +10,20 @@ type ToolConfig = {
 
 function App() {
   const [config, setConfig] = useState<ToolConfig>()
+  const [status, setStatus] = useState<string>()
+
+  const fonts = [
+    'メイリオ',
+    'ＭＳ ゴシック',
+    'ＭＳ 明朝',
+    'HGS行書体',
+    'HGP創英角ﾎﾟｯﾌﾟ体'
+  ]
 
   const handleColorChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfig((prev) => ({...prev, color: event.target.value}))
   }
-  const handleFontChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFontChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setConfig((prev) => ({...prev, font: event.target.value}))
   }
   const handleSpeedPxChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,8 +41,9 @@ function App() {
     }
 
     chrome.storage.sync.set({config});
-
     chrome.tabs.sendMessage(tab.id, {config}, (res) => console.log('response', res));
+
+    setStatus('Started!!')
   }
 
   useEffect(() => {
@@ -53,7 +63,13 @@ function App() {
           <br />
 
           <label htmlFor="font">Comment Font: </label>
-          <input id="font" type="text" size={5} onChange={handleFontChange} value={config?.font}></input>
+          <select value={config?.font} onChange={handleFontChange}>
+            {fonts.map((font) => {
+              return (
+                <option key={font} value={font}>{font}</option>
+              )
+            })}
+          </select>
           <br />
 
           <label htmlFor="speed">Speed(px/frame): </label>
@@ -66,6 +82,10 @@ function App() {
         </form>
 
         <button onClick={handleClick}>Start</button>
+
+        <div>
+          {status}
+        </div>
       </header>
     </div>
   )
