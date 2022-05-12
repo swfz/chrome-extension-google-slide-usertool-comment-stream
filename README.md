@@ -9,12 +9,12 @@ Chrome Extension to flow comments posted on User Tools onto slides.
 
 - download
 
-Download [googleslide-comment-stream-v1.0.0.tar.gz](https://github.com/swfz/chrome-extension-google-slide-usertool-comment-stream/releases/download/v1.0.0/googleslide-comment-stream-v1.0.0.tar.gz)
+Download [googleslide-comment-stream-v1.0.2.tar.gz](https://github.com/swfz/chrome-extension-google-slide-usertool-comment-stream/releases/download/v1.0.2/googleslide-comment-stream-v1.0.2.tar.gz)
 
 - unzip
 
 ```shell
-tar -zxvf googleslide-comment-stream-v1.0.0.tar.gz
+tar -zxvf googleslide-comment-stream-v1.0.2.tar.gz
 ```
 
 - upload
