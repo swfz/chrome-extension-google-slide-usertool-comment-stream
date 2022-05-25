@@ -70,7 +70,7 @@ function App() {
         <p>スライド側とユーザーツール側両方で「Start」をクリックしてください</p>
         <form>
           <label htmlFor="color">Comment Color: </label>
-          <input id="color" type="color" onChange={handleColorChange} value={config?.color}></input>
+          <input id="color" type="color" onChange={handleColorChange} value={config?.color || '#000000'}></input>
           <br />
 
           <label htmlFor="font">Comment Font: </label>
@@ -84,11 +84,11 @@ function App() {
           <br />
 
           <label htmlFor="speed">Speed(px/frame): </label>
-          <input id="speed" type="number" onChange={handleSpeedPxChange} value={config?.speedPx}></input>
+          <input id="speed" type="number" onChange={handleSpeedPxChange} value={config?.speedPx || 5}></input>
           <br />
 
           <label htmlFor="size">Size(em): </label>
-          <input id="size" type="number" onChange={handleSizeEmChange} value={config?.sizeEm}></input>
+          <input id="size" type="number" onChange={handleSizeEmChange} value={config?.sizeEm || 4}></input>
           <br />
 
           <label htmlFor="clap">Clap(color): </label>
