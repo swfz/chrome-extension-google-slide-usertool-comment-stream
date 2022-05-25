@@ -6,6 +6,7 @@ type ToolConfig = {
   font?: string;
   speedPx?: number;
   sizeEm?: number;
+  clap?: string;
 }
 
 function App() {
@@ -20,6 +21,13 @@ function App() {
     'HGP創英角ﾎﾟｯﾌﾟ体'
   ]
 
+  const claps = [
+    'none',
+    'black',
+    'white',
+    'pink'
+  ]
+
   const handleColorChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfig((prev) => ({...prev, color: event.target.value}))
   }
@@ -31,6 +39,9 @@ function App() {
   }
   const handleSizeEmChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfig((prev) => ({...prev, sizeEm: parseInt(event.target.value)}))
+  }
+  const handleClapChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setConfig((prev) => ({...prev, clap: event.target.value}))
   }
 
   const handleClick = async () => {
@@ -78,6 +89,16 @@ function App() {
 
           <label htmlFor="size">Size(em): </label>
           <input id="size" type="number" onChange={handleSizeEmChange} value={config?.sizeEm}></input>
+          <br />
+
+          <label htmlFor="clap">Clap(color): </label>
+          <select value={config?.clap} onChange={handleClapChange}>
+            {claps.map((value) => {
+              return (
+                <option key={value} value={value}>{value}</option>
+              )
+            })}
+          </select>
           <br />
         </form>
 
