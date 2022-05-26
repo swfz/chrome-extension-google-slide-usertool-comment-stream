@@ -11,7 +11,7 @@ const commentElementStyle = (config, windowWidth, top) => {
     transform: `translateX(${windowWidth}px)`,
     color: config.color || '#000',
     fontFamily: config.font,
-    fontSize: `${(config.sizePx || 4)}px`,
+    fontSize: `${(config.sizePx || 50)}px`,
     position: 'absolute',
     top: `${top}px`,
     whiteSpace: 'nowrap'

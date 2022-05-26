@@ -88,7 +88,7 @@ function App() {
           <br />
 
           <label htmlFor="size">Size(px): </label>
-          <input id="size" type="number" onChange={handleSizePxChange} value={config?.sizePx || 4}></input>
+          <input id="size" type="number" onChange={handleSizePxChange} value={config?.sizePx || 50}></input>
           <br />
 
           <label htmlFor="clap">Clap(color): </label>
