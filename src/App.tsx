@@ -5,7 +5,7 @@ type ToolConfig = {
   color?: string;
   font?: string;
   speedPx?: number;
-  sizeEm?: number;
+  sizePx?: number;
   clap?: string;
 }
 
@@ -37,8 +37,8 @@ function App() {
   const handleSpeedPxChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfig((prev) => ({...prev, speedPx: parseInt(event.target.value)}))
   }
-  const handleSizeEmChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setConfig((prev) => ({...prev, sizeEm: parseInt(event.target.value)}))
+  const handleSizePxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setConfig((prev) => ({...prev, sizePx: parseInt(event.target.value)}))
   }
   const handleClapChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setConfig((prev) => ({...prev, clap: event.target.value}))
@@ -87,8 +87,8 @@ function App() {
           <input id="speed" type="number" onChange={handleSpeedPxChange} value={config?.speedPx || 5}></input>
           <br />
 
-          <label htmlFor="size">Size(em): </label>
-          <input id="size" type="number" onChange={handleSizeEmChange} value={config?.sizeEm || 4}></input>
+          <label htmlFor="size">Size(px): </label>
+          <input id="size" type="number" onChange={handleSizePxChange} value={config?.sizePx || 4}></input>
           <br />
 
           <label htmlFor="clap">Clap(color): </label>
