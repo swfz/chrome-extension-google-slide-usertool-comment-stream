@@ -102,6 +102,13 @@ function App() {
           <br />
         </form>
 
+        <div className="preview">
+          <div style={{ verticalAlign: 'bottom', color: config?.color, fontSize: config?.sizePx, fontFamily: config?.font }}>
+            Preview
+          </div>
+        </div>
+
+        <br />
         <button onClick={handleClick}>Start</button>
 
         <div>
