@@ -6,6 +6,27 @@ const clapFilters = {
   pink: 'brightness(0) saturate(100%) invert(29%) sepia(69%) saturate(6456%) hue-rotate(316deg) brightness(103%) contrast(107%)'
 }
 
+const commentElementStyle = (config, windowWidth, top) => {
+  return {
+    transform: `translateX(${windowWidth}px)`,
+    color: config.color || '#000',
+    fontFamily: config.font,
+    fontSize: `${(config.sizeEm || 4)}em`,
+    position: 'absolute',
+    top: `${top}px`,
+    whiteSpace: 'nowrap'
+  }
+}
+
+const clapElementStyle = (top) => {
+  return {
+    position: 'absolute',
+    top: `${top}px`,
+    right: `0px`,
+    opacity: '0'
+  }
+}
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log('comment stream started.')
 
@@ -17,23 +38,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const containerHeight = boxElement.clientHeight * (1 - beltPerContainer);
 
   // TODO: 50決め打ちの箇所動的にする
-  const elementTop = containerHeight - clapElement.clientHeight - 50;
+  const clapElementTop = containerHeight - clapElement.clientHeight - 50;
 
   const p = document.createElement("p");
+  p.style.margin = '0';
+
   const img = document.createElement("img");
   const imageUrl = chrome.runtime.getURL("images/sign_language_black_24dp.svg");
   img.src = imageUrl;
-  p.style.margin = '0';
-
-  clapElement.style.position = 'absolute';
-  clapElement.style.top = `${elementTop}px`;
-  clapElement.style.right = '0px';
-  clapElement.style.opacity = '0';
 
   clapElement.appendChild(p)
   clapElement.appendChild(img)
-
   boxElement.appendChild(clapElement);
+
+  const clapElementStyles = clapElementStyle(clapElementTop)
+  Object.entries(clapElementStyles).forEach(([k,v]) => clapElement.style[k] = v)
 
   chrome.storage.sync.get(['config'], ({config}) => {
     const broadcastChannel = new BroadcastChannel('comment_channel');
@@ -42,32 +61,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       const element = document.createElement("p");
       element.innerText = comment;
 
-      const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
-      const boxElement = iframeElement.contentWindow.document.querySelector('.punch-viewer-content');
-
       boxElement.appendChild(element);
-
-      const beltPerContainer = 0.12;
-      const containerHeight = boxElement.clientHeight * (1 - beltPerContainer);
 
       const random = Math.random();
       const elementTop = ((containerHeight - element.clientHeight) * random);
 
       const moveUnit = config.speedPx || 5;
-      const fontSize = config.sizeEm || 4;
-      const textColor = config.color || "#000";
-      const textFont = config.font
 
       const windowWidth = document.body.clientWidth;
-      element.style.transform = `translateX(${windowWidth}px)`;
-      element.style.color = textColor;
-      element.style.fontFamily = textFont;
-      element.style.fontSize = `${fontSize}em`;
-      element.style.position = 'absolute';
-      element.style.top = `${elementTop}px`;
-      element.style.whiteSpace = 'nowrap';
-      let moveX = windowWidth;
+      const commentStyles = commentElementStyle(config, windowWidth, elementTop);
+      Object.entries(commentStyles).forEach(([k,v]) => element.style[k] = v)
 
+      let moveX = windowWidth;
       const elementWidth = element.clientWidth;
 
       const moveAnimation = () => {
