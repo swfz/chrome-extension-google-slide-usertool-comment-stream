@@ -42,22 +42,22 @@ button {
   font-size: calc(10px + 2vmin);
 }
 
-input[type='number']{
+input[type='number'] {
   width: 50px;
 }
 
-input[type='text']{
+input[type='text'] {
   width: 50px;
 }
 
-label{
+label {
   display: inline-block;
   text-align: right;
   width: 150px;
 }
 
 .preview {
-  border: #FFF solid 1px;
+  border: #fff solid 1px;
   display: block;
   padding: 0;
   width: 100%;
