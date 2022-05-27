@@ -17,12 +17,11 @@ const commentElementStyle = (config, windowWidth, top) => {
     whiteSpace: 'nowrap'
   }
 }
-
-const clapElementStyle = (top) => {
+const clapElementStyle = (bottom, right) => {
   return {
     position: 'absolute',
-    top: `${top}px`,
-    right: `0px`,
+    bottom: `${bottom}px`,
+    right: `${right}px`,
     opacity: '0'
   }
 }
@@ -36,9 +35,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   const beltPerContainer = 0.12;
   const containerHeight = boxElement.clientHeight * (1 - beltPerContainer);
+  const containerWidth = boxElement.clientWidth;
 
-  // TODO: 50決め打ちの箇所動的にする
-  const clapElementTop = containerHeight - clapElement.clientHeight - 50;
+  // 右1割、下1割
+  const clapElementBottom = boxElement.clientHeight * 0.1;
+  const clapElementRight = containerWidth * 0.1;
 
   const p = document.createElement("p");
   p.style.margin = '0';
@@ -51,7 +52,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   clapElement.appendChild(img)
   boxElement.appendChild(clapElement);
 
-  const clapElementStyles = clapElementStyle(clapElementTop)
+  const clapElementStyles = clapElementStyle(clapElementBottom, clapElementRight)
   Object.entries(clapElementStyles).forEach(([k,v]) => clapElement.style[k] = v)
 
   chrome.storage.sync.get(['config'], ({config}) => {

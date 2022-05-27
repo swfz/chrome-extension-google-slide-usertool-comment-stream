@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "rollup-plugin-copy": "^3.4.0"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.184",
