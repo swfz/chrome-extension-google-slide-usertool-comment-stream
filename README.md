@@ -4,22 +4,58 @@ Chrome Extension to flow comments posted on User Tools onto slides.
 
 ![alt](images/stream.gif)
 
-## install
+## Install
 
-- download
+[googleslide-comment-stream](https://chrome.google.com/webstore/detail/googleslide-comment-strea/cjhbnmagndpfjadnpbceahnccfpbmaii)
 
-Download [googleslide-comment-stream-v2.0.2.tar.gz](https://github.com/swfz/chrome-extension-google-slide-usertool-comment-stream/releases/download/v2.0.2/googleslide-comment-stream-v2.0.2.tar.gz)
+Add the extension to Chrome from the Store URL above
 
-- unzip
 
-```shell
-tar -zxvf googleslide-comment-stream-v2.0.2.tar.gz
-```
+## How to use
 
-- upload
+### Start Slide Show
 
-Unzip it and load it with "Load Unpackaged Extensions"
+Click on Presenter Display
 
+![Start Slide Show](images/how-to-use-01.png)
+
+### Launch User Tools
+
+![Launch User Tools](images/how-to-use-02.png)
+
+Click "Start a new session" on the User Tools tab to start a User Tools session in a new tab
+
+### Access and share URLs
+
+![Access and share URLs](images/how-to-use-03.png)
+
+The URL of the user tool will be displayed on both the slide side and the presenter, and will be shared with the members listening to the presentation.
+
+### User tool side settings
+
+![User tool side settings](images/how-to-use-04.png)
+
+Click on the extension icon to configure
+
+![User tool side settings](images/how-to-use-05.png)
+
+Enter the settings for the areas you want to change from the defaults and click "Start".
+
+### Presentation side settings
+
+![Presentation side settings](images/how-to-use-06.png)
+
+The presentation slide side will also be set up.
+
+![Presentation side settings](images/how-to-use-07.png)
+
+The settings are synchronized, so if you have changed the settings in the previous step, they should be reflected.
+
+### Ready to go
+
+![Ready to go](images/how-to-use-08.png)
+
+When you post a comment in the User Tools, the comment will flow to the slide side
 ## development
 
 ```shell
