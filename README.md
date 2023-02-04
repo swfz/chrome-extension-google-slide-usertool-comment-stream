@@ -10,7 +10,6 @@ Chrome Extension to flow comments posted on User Tools onto slides.
 
 Add the extension to Chrome from the Store URL above
 
-
 ## How to use
 
 ### Start Slide Show
@@ -31,13 +30,13 @@ Click "Start a new session" on the User Tools tab to start a User Tools session 
 
 The URL of the user tool will be displayed on both the slide side and the presenter, and will be shared with the members listening to the presentation.
 
-### User tool side settings
+### Presenter side settings
 
-![User tool side settings](images/how-to-use-04.png)
+![User tool side settings](images/how-to-use-09.png)
 
-Click on the extension icon to configure
+Right-click on the title bar and press the "View in tabs" button
 
-![User tool side settings](images/how-to-use-05.png)
+![User tool side settings](images/how-to-use-10.png)
 
 Enter the settings for the areas you want to change from the defaults and click "Start".
 
