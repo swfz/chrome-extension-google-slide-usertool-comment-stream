@@ -56,6 +56,13 @@ The settings are synchronized, so if you have changed the settings in the previo
 ![Ready to go](images/how-to-use-08.png)
 
 When you post a comment in the User Tools, the comment will flow to the slide side
+
+## Extra(Clap)
+
+If you post a series of `8`, an applause effect will be displayed in the lower right corner of the screen for each successive `8` posted.
+
+![Clap](images/clap.gif)
+
 ## development
 
 ```shell
