@@ -27,9 +27,22 @@ const clapElementStyle = (bottom, right) => {
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
+
+  if (iframeElement === null) {
+    return;
+  }
+
   console.log('comment stream started.');
 
-  const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
+  const linkBar = iframeElement.contentWindow.document.querySelector('.punch-viewer-questions-link-bar-container');
+  if (linkBar != null) {
+    linkBar.remove();
+    const wrapper = iframeElement.contentWindow.document.querySelector('.punch-viewer-page-wrapper-container');
+    wrapper.style.height = '100%';
+    wrapper.style.top = '0%';
+  }
+
   const boxElement = iframeElement.contentWindow.document.querySelector('.punch-viewer-content');
   const clapElement = document.createElement('div');
 
