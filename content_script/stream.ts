@@ -29,14 +29,14 @@ const clapElementStyle = (bottom, right) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
 
-  if ( iframeElement === null ) {
-    return
+  if (iframeElement === null) {
+    return;
   }
 
   console.log('comment stream started.');
 
   const linkBar = iframeElement.contentWindow.document.querySelector('.punch-viewer-questions-link-bar-container');
-  if ( linkBar != null ) {
+  if (linkBar != null) {
     linkBar.remove();
     const wrapper = iframeElement.contentWindow.document.querySelector('.punch-viewer-page-wrapper-container');
     wrapper.style.height = '100%';
