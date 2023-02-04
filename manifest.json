@@ -9,11 +9,8 @@
   "content_scripts": [
     {
       "matches": ["https://docs.google.com/presentation/d/*/edit"],
-      "js": ["content_script/stream.ts"]
-    },
-    {
-      "matches": ["https://docs.google.com/presentation/d/e/*"],
-      "js": ["content_script/subscribe.ts"]
+      "match_about_blank": true,
+      "js": ["content_script/stream.ts", "content_script/presenter_subscribe.ts"]
     }
   ],
   "action": {
