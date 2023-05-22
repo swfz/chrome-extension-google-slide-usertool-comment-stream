@@ -34,5 +34,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   observer.observe(observeElement, { subtree: true, childList: true });
 
-  sendResponse({ result: true });
+  sendResponse({ message: 'A listener has been added to the PRESENTER side.' });
 });

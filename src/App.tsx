@@ -41,9 +41,9 @@ function App() {
     }
 
     chrome.storage.sync.set({ config });
-    chrome.tabs.sendMessage(tab.id, { config }, (res) => console.log('response', res));
-
-    setStatus('Started!!');
+    chrome.tabs.sendMessage(tab.id, { config }, (res) => {
+      setStatus(res.message);
+    });
   };
 
   useEffect(() => {
