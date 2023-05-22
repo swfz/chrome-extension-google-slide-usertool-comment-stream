@@ -1,12 +1,4 @@
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  const observeElement = document.querySelector<HTMLDivElement>('.punch-viewer-speaker-questions');
-
-  if (observeElement === null) {
-    return;
-  }
-
-  console.log('subscribe presenter usertool started');
-
+const subscribeComments = (observeElement, sendResponse) => {
   const broadcastChannel = new BroadcastChannel('comment_channel');
 
   const extractComment = (mutationRecords: MutationRecord[]): string[] => {
@@ -35,4 +27,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   observer.observe(observeElement, { subtree: true, childList: true });
 
   sendResponse({ message: 'A listener has been added to the PRESENTER side.' });
+};
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const observeElement = document.querySelector<HTMLDivElement>('.punch-viewer-speaker-questions');
+
+  if (observeElement === null) {
+    return;
+  }
+
+  console.log('subscribe presenter usertool started');
+
+  if (message.command === 'Load') {
+    subscribeComments(observeElement, sendResponse);
+  }
 });
