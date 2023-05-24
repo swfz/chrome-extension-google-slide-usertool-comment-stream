@@ -15,4 +15,3 @@ jobs:
         run: |
           yarn
           yarn build
-
