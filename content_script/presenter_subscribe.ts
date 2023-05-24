@@ -1,12 +1,4 @@
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  const observeElement = document.querySelector<HTMLDivElement>('.punch-viewer-speaker-questions');
-
-  if (observeElement === null) {
-    return;
-  }
-
-  console.log('subscribe presenter usertool started');
-
+const subscribeComments = (observeElement, sendResponse) => {
   const broadcastChannel = new BroadcastChannel('comment_channel');
 
   const extractComment = (mutationRecords: MutationRecord[]): string[] => {
@@ -34,5 +26,42 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   observer.observe(observeElement, { subtree: true, childList: true });
 
-  sendResponse({ result: true });
+  sendResponse({ screenType: 'presenter', message: 'A listener has been added to the PRESENTER side.' });
+};
+
+const extractAllComments = (sendResponse) => {
+  const commentElements = document.querySelectorAll<HTMLDivElement>('.punch-qanda-question-content');
+
+  const comments = Array.from(commentElements).map((commentElement) => {
+    const userElem = commentElement.querySelector('.punch-qanda-question-user-name');
+    const timeElem = commentElement.querySelector('.punch-qanda-question-time');
+    const textElem = commentElement.querySelector('.punch-qanda-question-text');
+    const prosElem = commentElement.querySelector('#\\:3b');
+    const againstElem = commentElement.querySelector('#\\:3c');
+
+    return {
+      user: userElem?.textContent,
+      time: timeElem?.textContent,
+      text: textElem?.textContent,
+      pros: prosElem?.textContent,
+      against: againstElem?.textContent,
+    };
+  });
+
+  sendResponse({ comments });
+};
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const observeElement = document.querySelector<HTMLDivElement>('.punch-viewer-speaker-questions');
+
+  if (observeElement === null) {
+    return;
+  }
+
+  if (message.command === 'Load') {
+    subscribeComments(observeElement, sendResponse);
+    console.log('subscribe presenter usertool started');
+  } else if (message.command === 'Download') {
+    extractAllComments(sendResponse);
+  }
 });

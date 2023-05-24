@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "GoogleSlide Comment Stream",
   "version": "3.0.0",
-  "permissions": ["storage"],
+  "permissions": ["storage", "downloads"],
   "background": {
     "service_worker": "background/background.ts"
   },

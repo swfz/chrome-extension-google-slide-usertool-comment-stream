@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import './App.css';
 
-type ToolConfig = {
+type Config = {
   color?: string;
   font?: string;
   speedPx?: number;
@@ -10,8 +10,9 @@ type ToolConfig = {
 };
 
 function App() {
-  const [config, setConfig] = useState<ToolConfig>();
+  const [config, setConfig] = useState<Config>();
   const [status, setStatus] = useState<string>();
+  const [presenter, setPresenter] = useState<number | null>();
 
   const fonts = ['メイリオ', 'ＭＳ ゴシック', 'ＭＳ 明朝', 'HGS行書体', 'HGP創英角ﾎﾟｯﾌﾟ体'];
 
@@ -33,7 +34,7 @@ function App() {
     setConfig((prev) => ({ ...prev, clap: event.target.value }));
   };
 
-  const handleClick = async () => {
+  const handleStart = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
     if (tab.id === undefined) {
@@ -41,15 +42,57 @@ function App() {
     }
 
     chrome.storage.sync.set({ config });
-    chrome.tabs.sendMessage(tab.id, { config }, (res) => console.log('response', res));
+    chrome.tabs.sendMessage(tab.id, { command: 'Load' }, (res) => {
+      setStatus(res.message);
+      if (res.screenType === 'presenter') {
+        chrome.storage.sync.set({ presenter: tab.id });
+      }
+    });
+  };
 
-    setStatus('Started!!');
+  const handleDownloadComments = async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+    if (tab.id === undefined) {
+      return;
+    }
+
+    chrome.tabs.sendMessage(tab.id, { command: 'Download' }, (res) => {
+      if (res.comments) {
+        const jsonData = JSON.stringify(res.comments);
+        const mimeType = 'application/json';
+        const fileContent = new Blob([jsonData], { type: mimeType });
+        chrome.downloads.download(
+          {
+            filename: 'usertool-comments.json',
+            url: URL.createObjectURL(fileContent),
+          },
+          () => {
+            if (chrome.runtime.lastError) {
+              console.error(chrome.runtime.lastError.message);
+            }
+          }
+        );
+        setStatus(`${res.comments.length}件のコメントを保存します`);
+      }
+    });
   };
 
   useEffect(() => {
-    chrome.storage.sync.get(['config'], ({ config }) => {
-      setConfig(config);
-    });
+    (async () => {
+      chrome.storage.sync.get(['config'], ({ config }) => {
+        setConfig(config);
+      });
+
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      chrome.storage.sync.get(['presenter'], ({ presenter }) => {
+        if (tab.id === presenter) {
+          setPresenter(presenter);
+        } else {
+          setPresenter(null);
+        }
+      });
+    })();
   }, []);
 
   return (
@@ -100,8 +143,8 @@ function App() {
         </div>
 
         <br />
-        <button onClick={handleClick}>Start</button>
-
+        <button onClick={handleStart}>Start</button>
+        {presenter ? <button onClick={handleDownloadComments}>DownloadComments</button> : ''}
         <div>{status}</div>
       </header>
     </div>
