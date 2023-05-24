@@ -26,7 +26,29 @@ const subscribeComments = (observeElement, sendResponse) => {
 
   observer.observe(observeElement, { subtree: true, childList: true });
 
-  sendResponse({ message: 'A listener has been added to the PRESENTER side.' });
+  sendResponse({ screenType: 'presenter', message: 'A listener has been added to the PRESENTER side.' });
+};
+
+const extractAllComments = (sendResponse) => {
+  const commentElements = document.querySelectorAll<HTMLDivElement>('.punch-qanda-question-content');
+
+  const comments = Array.from(commentElements).map((commentElement) => {
+    const userElem = commentElement.querySelector('.punch-qanda-question-user-name');
+    const timeElem = commentElement.querySelector('.punch-qanda-question-time');
+    const textElem = commentElement.querySelector('.punch-qanda-question-text');
+    const prosElem = commentElement.querySelector('#\\:3b');
+    const againstElem = commentElement.querySelector('#\\:3c');
+
+    return {
+      user: userElem?.textContent,
+      time: timeElem?.textContent,
+      text: textElem?.textContent,
+      pros: prosElem?.textContent,
+      against: againstElem?.textContent,
+    };
+  });
+
+  sendResponse({ comments });
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -36,9 +58,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return;
   }
 
-  console.log('subscribe presenter usertool started');
-
   if (message.command === 'Load') {
     subscribeComments(observeElement, sendResponse);
+    console.log('subscribe presenter usertool started');
+  } else if (message.command === 'Download') {
+    extractAllComments(sendResponse);
   }
 });

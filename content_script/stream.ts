@@ -127,5 +127,5 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     broadcastChannel.onmessage = handleEvent;
   });
 
-  sendResponse({ message: 'A listener has been added to the SLIDE side.' });
+  sendResponse({ screenType: 'slide', message: 'A listener has been added to the SLIDE side.' });
 });
