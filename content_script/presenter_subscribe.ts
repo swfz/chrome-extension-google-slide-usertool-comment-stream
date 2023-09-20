@@ -1,3 +1,5 @@
+console.log('loaded google slide comment stream');
+
 const subscribeComments = (observeElement, sendResponse) => {
   const broadcastChannel = new BroadcastChannel('comment_channel');
 
