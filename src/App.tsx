@@ -103,47 +103,67 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>GoogleSlide Comment Stream</h1>
-        <p>スライド側とユーザーツール側両方で「Start」をクリックしてください</p>
+        <p>Click "Start" on both the slide side and the presenter user tools side</p>
         <form>
-          <label htmlFor="color">Comment Color: </label>
-          <input id="color" type="color" onChange={handleColorChange} value={config?.color || '#000000'}></input>
-          <br />
+          <div className="pseudo-table">
+            <div className="pseudo-row">
+              <label htmlFor="color" className="pseudo-cell">Comment Color: </label>
+              <div className="pseudo-cell">
+                <input id="color" type="color" onChange={handleColorChange} value={config?.color || '#000000'}></input>
+              </div>
+            </div>
 
-          <label htmlFor="font">Comment Font: </label>
-          <select value={config?.font} onChange={handleFontChange}>
-            {fonts.map((font) => {
-              return (
-                <option key={font} value={font}>
-                  {font}
-                </option>
-              );
-            })}
-          </select>
-          <br />
+            <div className="pseudo-row">
+              <label htmlFor="font" className="pseudo-cell">Comment Font: </label>
+              <div className="pseudo-cell">
+                <select value={config?.font} onChange={handleFontChange}>
+                  {fonts.map((font) => {
+                    return (
+                      <option key={font} value={font}>
+                        {font}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
 
-          <label htmlFor="speed">Speed(px/frame): </label>
-          <input id="speed" type="number" onChange={handleSpeedPxChange} value={config?.speedPx || 5}></input>
-          <br />
+            <div className="pseudo-row">
+              <label htmlFor="speed" className="pseudo-cell">Speed(px/frame): </label>
+              <div className="pseudo-cell">
+                <input id="speed" type="number" onChange={handleSpeedPxChange} value={config?.speedPx || 5}></input>
+              </div>
+            </div>
 
-          <label htmlFor="size">Size(px): </label>
-          <input id="size" type="number" onChange={handleSizePxChange} value={config?.sizePx || 50}></input>
-          <br />
+            <div className="pseudo-row">
+              <label htmlFor="size" className="pseudo-cell">Size(px): </label>
+              <div className="pseudo-cell">
+                <input id="size" type="number" onChange={handleSizePxChange} value={config?.sizePx || 50}></input>
+              </div>
+            </div>
 
-          <label htmlFor="clap">Clap(color): </label>
-          <select value={config?.clap} onChange={handleClapChange}>
-            {claps.map((value) => {
-              return (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              );
-            })}
-          </select>
+            <div className="pseudo-row">
+              <label htmlFor="clap" className="pseudo-cell">Clap(color): </label>
+              <div className="pseudo-cell">
+                <select value={config?.clap} onChange={handleClapChange}>
+                  {claps.map((value) => {
+                    return (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
 
-          <br />
-
-          <label htmlFor="plant">Use Plant(require option configuration): </label>
-          <input id="plant" type="checkbox" onChange={handlePlantChange} checked={config?.plant}></input>
+            <div className="pseudo-row">
+              <label htmlFor="plant" className="pseudo-cell">Use Plant(require option configuration): </label>
+              <div className="pseudo-cell">
+                <input id="plant" type="checkbox" onChange={handlePlantChange} checked={config?.plant}></input>
+              </div>
+            </div>
+          </div>
         </form>
 
         <div className="preview">
