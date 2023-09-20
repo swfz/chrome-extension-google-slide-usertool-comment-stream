@@ -102,7 +102,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>GoogleSlide Comment Stream</h1>
+        <h2>GoogleSlide Comment Stream</h2>
         <p>Click "Start" on both the slide side and the presenter user tools side</p>
         <form>
           <div className="pseudo-table">
