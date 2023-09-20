@@ -142,8 +142,8 @@ function App() {
 
           <br />
 
-          <label htmlFor="size">Use Plant(require option configuration): </label>
-          <input id="size" type="checkbox" onChange={handlePlantChange} checked={config?.plant}></input>
+          <label htmlFor="plant">Use Plant(require option configuration): </label>
+          <input id="plant" type="checkbox" onChange={handlePlantChange} checked={config?.plant}></input>
         </form>
 
         <div className="preview">
