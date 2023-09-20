@@ -7,6 +7,7 @@ type Config = {
   speedPx?: number;
   sizePx?: number;
   clap?: string;
+  plant?: boolean;
 };
 
 function App() {
@@ -32,6 +33,9 @@ function App() {
   };
   const handleClapChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setConfig((prev) => ({ ...prev, clap: event.target.value }));
+  };
+  const handlePlantChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setConfig((prev) => ({ ...prev, plant: event.target.checked }));
   };
 
   const handleStart = async () => {
@@ -135,7 +139,11 @@ function App() {
               );
             })}
           </select>
+
           <br />
+
+          <label htmlFor="size">Use Plant(require option configuration): </label>
+          <input id="size" type="checkbox" onChange={handlePlantChange} checked={config?.plant}></input>
         </form>
 
         <div className="preview">
