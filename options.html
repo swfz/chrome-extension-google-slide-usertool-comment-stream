@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="button.css">
+  </head>
+  <body>
+    <div>
+      <h2>Comment setting for preparation</h2>
+    </div>
+    <div>
+      <p>
+        This function is used to play a predefined comment at a predetermined timing.
+      </p>
+      <p>
+        The key is the slide number
+      </p>
+      <p>
+        When you transition to the target slide number, a `comment` message is automatically posted after `seconds` seconds of each line
+      </p>
+      <p>
+        To use this feature, the extension must also Start on the screen where the audience posts comments in the User Tools
+      </p>
+    </div>
+
+    <hr />
+    <div>Configuration Structure(e.g.)</div>
+    <pre>
+      <code>
+{
+  "3": [
+    {"seconds": 0.5, "comment": "looks good"},
+    {"seconds": 1, "comment": "cooooooooooool!!!!"}
+  ],
+  "4": [
+    {"seconds": 2, "comment": "wow"}
+  ]
+}
+      </code>
+    </pre>
+    <hr />
+
+    <div id="optionsList">
+    </div>
+    <textarea cols="100" rows="20" id="sakura"></textarea>
+    <br />
+    <button class="save" id="save">Save</button>
+  </body>
+  <script src="options.js"></script>
+</html>

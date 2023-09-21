@@ -11,8 +11,14 @@
       "matches": ["https://docs.google.com/presentation/d/*/edit"],
       "match_about_blank": true,
       "js": ["content_script/stream.ts", "content_script/presenter_subscribe.ts"]
+    },
+    {
+      "matches": ["https://docs.google.com/presentation/d/e/*/askquestion?*"],
+      "match_about_blank": true,
+      "js": ["content_script/sakura.ts"]
     }
   ],
+  "options_page": "options.html",
   "action": {
     "default_popup": "index.html",
     "default_icon": {
