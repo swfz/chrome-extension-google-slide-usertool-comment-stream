@@ -1,4 +1,5 @@
 console.log('loaded google slide comment stream');
+let slidePageSubscribed = false;
 
 const clapFilters = {
   black: 'brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(26%) hue-rotate(88deg) brightness(87%) contrast(105%)',
@@ -27,6 +28,10 @@ const clapElementStyle = (bottom, right) => {
 };
 
 const addSubscribePageNumber = () => {
+  if (slidePageSubscribed) {
+    return;
+  }
+
   const broadcastChannel = new BroadcastChannel('plant_comment_channel');
   const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
 
@@ -60,6 +65,7 @@ const addSubscribePageNumber = () => {
   });
 
   observer.observe(observeElement, { subtree: true, childList: true });
+  slidePageSubscribed = true;
 }
 
 

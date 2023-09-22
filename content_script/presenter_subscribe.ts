@@ -1,4 +1,5 @@
 console.log('loaded google slide comment stream');
+let commentSubscribed = false;
 
 const subscribeComments = (observeElement, sendResponse) => {
   const broadcastChannel = new BroadcastChannel('comment_channel');
@@ -27,6 +28,7 @@ const subscribeComments = (observeElement, sendResponse) => {
   });
 
   observer.observe(observeElement, { subtree: true, childList: true });
+  commentSubscribed = true;
 
   sendResponse({ screenType: 'presenter', message: 'A listener has been added to the PRESENTER side.' });
 };
@@ -61,8 +63,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.command === 'Load') {
-    subscribeComments(observeElement, sendResponse);
-    console.log('subscribe presenter usertool started');
+    if (!commentSubscribed) {
+      subscribeComments(observeElement, sendResponse);
+      console.log('subscribe presenter usertool started');
+    }
   } else if (message.command === 'Download') {
     extractAllComments(sendResponse);
   }
