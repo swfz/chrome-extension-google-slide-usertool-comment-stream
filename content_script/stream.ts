@@ -146,11 +146,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       p.innerText = `+${recievedClaps.toString()}`;
 
       clapElement.style.filter = clapFilters[config.clap] || clapFilters['black'];
+
+      const randomMotion = (range) => {
+        // + - range分のランダム数値
+        return Math.floor(Math.random() * (range - (- range) + 1)) + (- range)
+      }
+
       let opacity = 1;
       const clapAnimation = () => {
         if (opacity >= 0) {
           opacity = opacity - 0.01;
           clapElement.style.opacity = opacity.toString();
+          clapElement.style.bottom = clapElementBottom + randomMotion(2) + 'px'
+          clapElement.style.right = clapElementRight + randomMotion(2) + 'px'
           requestAnimationFrame(clapAnimation);
         }
       };
@@ -158,8 +166,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     };
 
     const handleEvent = (event) => {
-      const claps = event.data.reduce((n, comment) => n + comment.match(/8/g)?.length, 0);
-      const comments = event.data.filter((comment) => !comment.match(/^8+$/));
+      const claps = event.data.reduce((n, comment) => n + comment.match(/[8８]/g)?.length, 0);
+      const comments = event.data.filter((comment) => !comment.match(/^[8８]+$/));
 
       if (claps > 0) {
         renderClaps(claps);
