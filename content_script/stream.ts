@@ -146,11 +146,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       p.innerText = `+${recievedClaps.toString()}`;
 
       clapElement.style.filter = clapFilters[config.clap] || clapFilters['black'];
+
+      const randomMotion = (range) => {
+        // + - range分のランダム数値
+        return Math.floor(Math.random() * (range - (- range) + 1)) + (- range)
+      }
+
       let opacity = 1;
       const clapAnimation = () => {
         if (opacity >= 0) {
           opacity = opacity - 0.01;
           clapElement.style.opacity = opacity.toString();
+          clapElement.style.bottom = clapElementBottom + randomMotion(2) + 'px'
+          clapElement.style.right = clapElementRight + randomMotion(2) + 'px'
           requestAnimationFrame(clapAnimation);
         }
       };
