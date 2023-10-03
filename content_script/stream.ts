@@ -158,8 +158,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     };
 
     const handleEvent = (event) => {
-      const claps = event.data.reduce((n, comment) => n + comment.match(/8/g)?.length, 0);
-      const comments = event.data.filter((comment) => !comment.match(/^8+$/));
+      const claps = event.data.reduce((n, comment) => n + comment.match(/[8８]/g)?.length, 0);
+      const comments = event.data.filter((comment) => !comment.match(/^[8８]+$/));
 
       if (claps > 0) {
         renderClaps(claps);
