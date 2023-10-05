@@ -1,0 +1,19 @@
+diff --git manifest.json manifest.json
+index fc0cc08..da7b950 100644
+--- manifest.json
++++ manifest.json
+@@ -8,12 +8,12 @@
+   },
+   "content_scripts": [
+     {
+-      "matches": ["https://docs.google.com/presentation/d/*/edit"],
++      "matches": ["https://docs.google.com/presentation/d/*/edit", "http://localhost:3000/*"],
+       "match_about_blank": true,
+       "js": ["content_script/stream.ts", "content_script/presenter_subscribe.ts"]
+     },
+     {
+-      "matches": ["https://docs.google.com/presentation/d/e/*/askquestion?*"],
++      "matches": ["https://docs.google.com/presentation/d/e/*/askquestion?*", "http://localhost:3000/usertool*"],
+       "match_about_blank": true,
+       "js": ["content_script/sakura.ts"]
+     }
