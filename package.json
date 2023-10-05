@@ -23,6 +23,6 @@
     "prettier": "3.0.3",
     "rollup-plugin-chrome-extension": "4.0.1-25",
     "typescript": "5.2.2",
-    "vite": "4.4.9"
+    "vite": "4.4.11"
   }
 }
