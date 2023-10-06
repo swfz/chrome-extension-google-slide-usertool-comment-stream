@@ -53,21 +53,21 @@ label {
 }
 
 .pseudo-table {
-    display: table;
-    width: 100%;
-    border-collapse: collapse;
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .pseudo-row {
-    display: table-row;
+  display: table-row;
 }
 
 .pseudo-cell {
-    display: table-cell;
-    padding: 5px 1px;
-    border: 1px solid #999;
+  display: table-cell;
+  padding: 5px 1px;
+  border: 1px solid #999;
 }
 
 .pseudo-cell:first-child {
-    width: 60%;
+  width: 60%;
 }
