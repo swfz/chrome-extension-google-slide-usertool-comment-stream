@@ -50,7 +50,7 @@ const addSubscribePageNumber = () => {
     const removed = records[0]?.removedNodes[0]?.textContent;
 
     if (added && removed && added > removed) {
-      chrome.storage.sync.get(['sakura'], ({sakura}) => {
+      chrome.storage.sync.get(['sakura'], ({ sakura }) => {
         const plantCommentRows = sakura[added];
 
         if (plantCommentRows !== undefined) {
@@ -60,14 +60,13 @@ const addSubscribePageNumber = () => {
             }, commentRow.seconds * 1000);
           });
         }
-      })
+      });
     }
   });
 
   observer.observe(observeElement, { subtree: true, childList: true });
   slidePageSubscribed = true;
-}
-
+};
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
@@ -149,16 +148,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       const randomMotion = (range) => {
         // + - range分のランダム数値
-        return Math.floor(Math.random() * (range - (- range) + 1)) + (- range)
-      }
+        return Math.floor(Math.random() * (range - -range + 1)) + -range;
+      };
 
       let opacity = 1;
       const clapAnimation = () => {
         if (opacity >= 0) {
           opacity = opacity - 0.01;
           clapElement.style.opacity = opacity.toString();
-          clapElement.style.bottom = clapElementBottom + randomMotion(2) + 'px'
-          clapElement.style.right = clapElementRight + randomMotion(2) + 'px'
+          clapElement.style.bottom = clapElementBottom + randomMotion(2) + 'px';
+          clapElement.style.right = clapElementRight + randomMotion(2) + 'px';
           requestAnimationFrame(clapAnimation);
         }
       };

@@ -75,7 +75,7 @@ function App() {
             if (chrome.runtime.lastError) {
               console.error(chrome.runtime.lastError.message);
             }
-          }
+          },
         );
         setStatus(`${res.comments.length}件のコメントを保存します`);
       }
@@ -107,14 +107,18 @@ function App() {
         <form>
           <div className="pseudo-table">
             <div className="pseudo-row">
-              <label htmlFor="color" className="pseudo-cell">Comment Color: </label>
+              <label htmlFor="color" className="pseudo-cell">
+                Comment Color:{' '}
+              </label>
               <div className="pseudo-cell">
                 <input id="color" type="color" onChange={handleColorChange} value={config?.color || '#000000'}></input>
               </div>
             </div>
 
             <div className="pseudo-row">
-              <label htmlFor="font" className="pseudo-cell">Comment Font: </label>
+              <label htmlFor="font" className="pseudo-cell">
+                Comment Font:{' '}
+              </label>
               <div className="pseudo-cell">
                 <select value={config?.font} onChange={handleFontChange}>
                   {fonts.map((font) => {
@@ -129,21 +133,27 @@ function App() {
             </div>
 
             <div className="pseudo-row">
-              <label htmlFor="speed" className="pseudo-cell">Speed(px/frame): </label>
+              <label htmlFor="speed" className="pseudo-cell">
+                Speed(px/frame):{' '}
+              </label>
               <div className="pseudo-cell">
                 <input id="speed" type="number" onChange={handleSpeedPxChange} value={config?.speedPx || 5}></input>
               </div>
             </div>
 
             <div className="pseudo-row">
-              <label htmlFor="size" className="pseudo-cell">Size(px): </label>
+              <label htmlFor="size" className="pseudo-cell">
+                Size(px):{' '}
+              </label>
               <div className="pseudo-cell">
                 <input id="size" type="number" onChange={handleSizePxChange} value={config?.sizePx || 50}></input>
               </div>
             </div>
 
             <div className="pseudo-row">
-              <label htmlFor="clap" className="pseudo-cell">Clap(color): </label>
+              <label htmlFor="clap" className="pseudo-cell">
+                Clap(color):{' '}
+              </label>
               <div className="pseudo-cell">
                 <select value={config?.clap} onChange={handleClapChange}>
                   {claps.map((value) => {
@@ -158,7 +168,9 @@ function App() {
             </div>
 
             <div className="pseudo-row">
-              <label htmlFor="plant" className="pseudo-cell">Use Plant(require option configuration): </label>
+              <label htmlFor="plant" className="pseudo-cell">
+                Use Plant(require option configuration):{' '}
+              </label>
               <div className="pseudo-cell">
                 <input id="plant" type="checkbox" onChange={handlePlantChange} checked={config?.plant}></input>
               </div>
