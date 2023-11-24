@@ -16,6 +16,10 @@ export default defineConfig({
           src: 'images/sign_language_black_24dp.svg',
           dest: 'dist/images',
         },
+        {
+          src: 'options.js',
+          dest: 'dist',
+        },
       ],
     }),
   ],
