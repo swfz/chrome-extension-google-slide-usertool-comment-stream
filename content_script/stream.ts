@@ -71,18 +71,26 @@ const addSubscribePageNumber = () => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
 
-  if (iframeElement === null) {
+  if (iframeElement === null || iframeElement.contentWindow === null) {
     return;
   }
 
   console.log('comment stream started.');
 
   const linkBar = iframeElement.contentWindow.document.querySelector('.punch-viewer-questions-link-bar-container');
-  if (linkBar != null) {
+  const content = iframeElement.contentWindow.document.querySelector('.punch-viewer-content');
+  const wrapper = iframeElement.contentWindow.document.querySelector('.punch-viewer-page-wrapper-container');
+
+  if (linkBar != null && wrapper != null && content != null) {
     linkBar.remove();
-    const wrapper = iframeElement.contentWindow.document.querySelector('.punch-viewer-page-wrapper-container');
+
+    content.style.height = `100%`;
+    content.style.width = `100%`;
+    content.style.left = '0';
     wrapper.style.height = '100%';
-    wrapper.style.top = '0%';
+    wrapper.style.width = `100%`;
+    wrapper.style.top = '0';
+    wrapper.style.left = '0';
   }
 
   const boxElement = iframeElement.contentWindow.document.querySelector('.punch-viewer-content');
