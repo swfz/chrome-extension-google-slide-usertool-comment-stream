@@ -5,6 +5,7 @@ Chrome Extension to flow comments posted on User Tools onto slides.
 Comment data is available in the user tools included with Google Slides, so there is no need to send data anywhere, making it easy to get started at work, etc.
 
 <!-- ![alt](images/stream.gif) -->
+
 ![alt](images/demo_stream.gif)
 
 ## Install
@@ -15,30 +16,31 @@ Add the extension to Chrome from the Store URL above
 
 ## How to use
 
-| step | description | image |
-|:-|:-|:-|
-| Start Slide Show| Click on Presenter Display| <img src="images/step01.png" /> |
-| Launch User Tools | Click "Start a new session" on the User Tools tab to start a User Tools session in a new tab| <img src="images/step02.png" /> |
-| Access and share URLs| The URL of the user tool will be displayed on both the slide side and the presenter, and will be shared with the members listening to the presentation.| <img src="images/step03.png" />|
-| Presenter settings|Right-click on the title bar and press the "View in tabs" button | <img src="images/step04.png" />|
-| Presenter settings| Enter the settings for the areas you want to change from the defaults and click "Start".|  <img src="images/step05.png" />|
-|Slide settings | The presentation slide side will also be set up. The settings are synchronized, so if you have changed the settings in the previous step, they should be reflected.| <img src="images/step06.png" /> |
-| Usertool settings | Open the Extended menu and press Start as in the above two cases. | <img src="images/step07.png" />|
-|Ready to go | When you post a comment in the User Tools, the comment will flow to the slide side| |
+| step                  | description                                                                                                                                                         | image                           |
+| :-------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------ |
+| Start Slide Show      | Click on Presenter Display                                                                                                                                          | <img src="images/step01.png" /> |
+| Launch User Tools     | Click "Start a new session" on the User Tools tab to start a User Tools session in a new tab                                                                        | <img src="images/step02.png" /> |
+| Access and share URLs | The URL of the user tool will be displayed on both the slide side and the presenter, and will be shared with the members listening to the presentation.             | <img src="images/step03.png" /> |
+| Presenter settings    | Right-click on the title bar and press the "View in tabs" button                                                                                                    | <img src="images/step04.png" /> |
+| Presenter settings    | Enter the settings for the areas you want to change from the defaults and click "Start".                                                                            | <img src="images/step05.png" /> |
+| Slide settings        | The presentation slide side will also be set up. The settings are synchronized, so if you have changed the settings in the previous step, they should be reflected. | <img src="images/step06.png" /> |
+| Usertool settings     | Open the Extended menu and press Start as in the above two cases.                                                                                                   | <img src="images/step07.png" /> |
+| Ready to go           | When you post a comment in the User Tools, the comment will flow to the slide side                                                                                  |                                 |
 
 ## Overview
 
 There are three screen types used in this extension: presenter slide usertool
 
-| Presenter | Slide | Usertool |
-|:-|:-|:-|
-| ![Presenter](images/presenter.png) | ![Slide](images/slide.png) | ![Usertool](images/usertool.png)|
+| Presenter                          | Slide                      | Usertool                         |
+| :--------------------------------- | :------------------------- | :------------------------------- |
+| ![Presenter](images/presenter.png) | ![Slide](images/slide.png) | ![Usertool](images/usertool.png) |
 
 content_script is running on each screen.
 
 In contents_script, DOM change detection (MutationObserver) for comments and slide numbers, and messaging between screens (BroadcastChannel) are performed.
 
 ## Feature
+
 ### Normal comment flow
 
 Audience comments on usertool
