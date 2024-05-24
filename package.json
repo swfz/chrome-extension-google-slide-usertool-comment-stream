@@ -15,7 +15,7 @@
     "rollup-plugin-copy": "3.5.0"
   },
   "devDependencies": {
-    "@types/chrome": "0.0.267",
+    "@types/chrome": "0.0.268",
     "@types/node": "20.11.30",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
