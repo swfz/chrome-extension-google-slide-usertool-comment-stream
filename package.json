@@ -2,6 +2,7 @@
   "name": "chrome-extension-gslide-usertool-comment-stream",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && node script/patch_manifest.js",
@@ -15,14 +16,15 @@
     "rollup-plugin-copy": "3.5.0"
   },
   "devDependencies": {
+    "@crxjs/vite-plugin": "2.0.0-beta.28",
     "@types/chrome": "0.0.283",
     "@types/node": "20.14.15",
     "@types/react": "18.3.7",
     "@types/react-dom": "18.3.0",
     "@vitejs/plugin-react": "4.3.3",
     "prettier": "3.3.3",
-    "rollup-plugin-chrome-extension": "4.0.1-25",
     "typescript": "5.6.3",
-    "vite": "4.5.5"
-  }
+    "vite": "5.4.11"
+  },
+  "packageManager": "pnpm@9.14.2"
 }
