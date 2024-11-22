@@ -1,7 +1,15 @@
 console.log('loaded google slide comment stream');
 let commentSubscribed = false;
 
-const subscribeComments = (observeElement, sendResponse) => {
+const selectors = {
+  gslide: {
+    commentNodeClassName: 'punch-viewer-speaker-questions',
+    listNodeSelector: '.punch-viewer-speaker-questions',
+    extractFn: (el) => el.children[1].children[2],
+  },
+}
+
+const subscribeComments = (platform, observeElement, sendResponse) => {
   const broadcastChannel = new BroadcastChannel('comment_channel');
 
   const extractComment = (mutationRecords: MutationRecord[]): string[] => {
@@ -10,12 +18,12 @@ const subscribeComments = (observeElement, sendResponse) => {
       .filter((record) => {
         const element = record.target as Element;
 
-        return element.className === 'punch-viewer-speaker-questions';
+        return element.className === selectors[platform].commentNodeClassName;
       })
       .map((record) => record.addedNodes[0]);
     const comments = Array.from(nodes).map((node) => {
       const element = node as HTMLElement;
-      const commentElement = element.children[1].children[2] as HTMLElement;
+      const commentElement = selectors[platform].extractFn(element) as HTMLElement;
 
       return commentElement.innerText;
     });
@@ -56,7 +64,8 @@ const extractAllComments = (sendResponse) => {
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  const observeElement = document.querySelector<HTMLDivElement>('.punch-viewer-speaker-questions');
+  const platform = message.platform;
+  const observeElement = document.querySelector<HTMLDivElement>(selectors[platform].listNodeSelector);
 
   if (observeElement === null) {
     return;
@@ -64,7 +73,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.command === 'Load') {
     if (!commentSubscribed) {
-      subscribeComments(observeElement, sendResponse);
+      subscribeComments(platform, observeElement, sendResponse);
       console.log('subscribe presenter usertool started');
     }
   } else if (message.command === 'Download') {
