@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'fs';
 
 const manifest = JSON.parse(fs.readFileSync('dist/manifest.json'));
 
