@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import './App.css';
 
 type Config = {
+  platform?: string;
   color?: string;
   font?: string;
   speedPx?: number;
@@ -15,10 +16,14 @@ function App() {
   const [status, setStatus] = useState<string>();
   const [presenter, setPresenter] = useState<number | null>();
 
+  const platforms: Config['platform'][] = ['gslide'];
   const fonts = ['メイリオ', 'ＭＳ ゴシック', 'ＭＳ 明朝', 'HGS行書体', 'HGP創英角ﾎﾟｯﾌﾟ体'];
 
   const claps = ['none', 'black', 'white', 'pink'];
 
+  const handlePlatformChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setConfig((prev) => ({ ...prev, platform: event.target.value }));
+  };
   const handleColorChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfig((prev) => ({ ...prev, color: event.target.value }));
   };
@@ -46,7 +51,7 @@ function App() {
     }
 
     chrome.storage.sync.set({ config });
-    chrome.tabs.sendMessage(tab.id, { command: 'Load' }, (res) => {
+    chrome.tabs.sendMessage(tab.id, { command: 'Load', platform: config?.platform }, (res) => {
       setStatus(res.message);
       if (res.screenType === 'presenter') {
         chrome.storage.sync.set({ presenter: tab.id });
@@ -106,6 +111,23 @@ function App() {
         <p>Click "Start" on both the slide side and the presenter user tools side</p>
         <form>
           <div className="pseudo-table">
+            <div className="pseudo-row">
+              <label htmlFor="platform" className="pseudo-cell">
+                Subscribe Platform:{' '}
+              </label>
+              <div className="pseudo-cell">
+                <select value={config?.platform || 'gslide'} onChange={handlePlatformChange}>
+                  {platforms.map((platform) => {
+                    return (
+                      <option key={platform} value={platform}>
+                        {platform}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
+
             <div className="pseudo-row">
               <label htmlFor="color" className="pseudo-cell">
                 Comment Color:{' '}
