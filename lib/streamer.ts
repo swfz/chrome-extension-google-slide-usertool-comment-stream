@@ -1,15 +1,7 @@
-const initialize = () => {
-  const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
-
-  if (iframeElement === null || iframeElement.contentWindow === null) {
-    return;
-  }
-
-  console.log('comment stream started.');
-
-  const linkBar = iframeElement.contentWindow.document.querySelector('.punch-viewer-questions-link-bar-container');
-  const content = iframeElement.contentWindow.document.querySelector('.punch-viewer-content');
-  const wrapper = iframeElement.contentWindow.document.querySelector('.punch-viewer-page-wrapper-container');
+const removelinkBar = (iframeElement: HTMLIFrameElement) => {
+  const linkBar = iframeElement.contentWindow?.document.querySelector<HTMLDivElement>('.punch-viewer-questions-link-bar-container');
+  const content = iframeElement.contentWindow?.document.querySelector<HTMLDivElement>('.punch-viewer-content');
+  const wrapper = iframeElement.contentWindow?.document.querySelector<HTMLDivElement>('.punch-viewer-page-wrapper-container');
 
   if (linkBar != null && wrapper != null && content != null) {
     linkBar.remove();
@@ -22,7 +14,6 @@ const initialize = () => {
     wrapper.style.top = '0';
     wrapper.style.left = '0';
   }
-  console.log('removed linkBar');
 };
 
 const clapFilters = {
@@ -49,41 +40,6 @@ const clapElementStyle = (bottom, right) => {
     right: `${right}px`,
     opacity: '0',
   };
-};
-const addSubscribePageNumber = () => {
-  const broadcastChannel = new BroadcastChannel('plant_comment_channel');
-  const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
-
-  if (iframeElement === null) {
-    return;
-  }
-  const observeElement = iframeElement.contentWindow.document.querySelector('.docs-material-menu-button-flat-default-caption');
-
-  if (observeElement === null) {
-    console.log('not exist observe element');
-    return;
-  }
-
-  const observer = new MutationObserver(function (records) {
-    const added = records.at(-1)?.addedNodes[0]?.textContent;
-    const removed = records[0]?.removedNodes[0]?.textContent;
-
-    if (added && removed && added > removed) {
-      chrome.storage.sync.get(['sakura'], ({ sakura }) => {
-        const plantCommentRows = sakura[added];
-
-        if (plantCommentRows !== undefined) {
-          plantCommentRows.forEach((commentRow) => {
-            setTimeout(() => {
-              broadcastChannel.postMessage(commentRow.comment);
-            }, commentRow.seconds * 1000);
-          });
-        }
-      });
-    }
-  });
-
-  observer.observe(observeElement, { subtree: true, childList: true });
 };
 
 const renderClaps = (
@@ -116,7 +72,7 @@ const renderClaps = (
   clapAnimation();
 };
 
-const addComment = (comment: string, boxElement: HTMLElement, containerHeight: number, config) => {
+const addComment = (comment: string, boxElement: Element, containerHeight: number, config) => {
   console.log('add comment');
 
   const element = document.createElement('p');
@@ -146,4 +102,4 @@ const addComment = (comment: string, boxElement: HTMLElement, containerHeight: n
   moveAnimation();
 };
 
-export { clapElementStyle, commentElementStyle, clapFilters, initialize, addSubscribePageNumber, addComment, renderClaps };
+export { clapElementStyle, commentElementStyle, clapFilters, removelinkBar, addComment, renderClaps };

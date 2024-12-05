@@ -1,4 +1,5 @@
-import { initialize, addSubscribePageNumber, clapElementStyle, addComment, renderClaps } from '../lib/streamer';
+import { addSubscribePageNumber } from '../lib/sakura';
+import { clapElementStyle, addComment, renderClaps, removelinkBar } from '../lib/streamer';
 
 console.log('loaded google slide comment stream');
 let slidePageSubscribed = false;
@@ -6,19 +7,30 @@ let slidePageSubscribed = false;
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   console.log(message);
 
+  const iframeElement: HTMLIFrameElement | null = document.querySelector('.punch-present-iframe');
+  if (iframeElement === null || iframeElement.contentWindow === null) {
+    sendResponse({ screenType: 'slide', message: 'Error: Not found slide element...' });
+    return;
+  }
+
   if (message.command === 'Load') {
-    initialize();
+    removelinkBar(iframeElement);
     chrome.runtime.sendMessage({ command: 'Load', from: 'stream', tabId: message.tabId });
     if (!slidePageSubscribed) {
-      addSubscribePageNumber();
+      addSubscribePageNumber(iframeElement);
       slidePageSubscribed = true;
     }
     sendResponse({ screenType: 'slide', message: 'A listener has been added to the SLIDE side.' });
   }
 
   if (message.command === 'SendSubscribedComments') {
-    const iframeElement: HTMLIFrameElement = document.querySelector('.punch-present-iframe');
     const boxElement = iframeElement.contentWindow.document.querySelector('.punch-viewer-content');
+
+    if (boxElement === null) {
+      sendResponse({ screenType: 'slide', message: 'Error: Not found slide element...' });
+      return;
+    }
+
     const clapElement = document.createElement('div');
 
     const beltPerContainer = 0.12;

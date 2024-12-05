@@ -91,6 +91,11 @@ function App() {
 
   const sampleComments = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+    if (tab.id === undefined) {
+      return;
+    }
+
     const comments = [`${Date.now()} サンプルコメント8888`];
     chrome.tabs.sendMessage(tab.id, { command: 'SendSubscribedComments', comments }, (res) => {
       console.log(res);
