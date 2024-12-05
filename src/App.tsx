@@ -89,6 +89,14 @@ function App() {
     });
   };
 
+  const sampleComments = async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const comments = [`${Date.now()} サンプルコメント8888`];
+    chrome.tabs.sendMessage(tab.id, { command: 'SendSubscribedComments', comments }, (res) => {
+      console.log(res);
+    });
+  };
+
   useEffect(() => {
     (async () => {
       chrome.storage.sync.get(['config'], ({ config }) => {
@@ -209,6 +217,7 @@ function App() {
         <br />
         <button onClick={handleStart}>Start</button>
         {presenter ? <button onClick={handleDownloadComments}>DownloadComments</button> : ''}
+        <button onClick={sampleComments}>Sample</button>
         <div>{status}</div>
       </header>
     </div>
