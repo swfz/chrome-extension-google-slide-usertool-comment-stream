@@ -1,6 +1,31 @@
-const addSubscribePageNumber = (iframeElement: HTMLIFrameElement) => {
-  const broadcastChannel = new BroadcastChannel('plant_comment_channel');
+import { messageHandler } from './util';
 
+// FIXME: 1ページで複数投稿があるとうまく投稿されないケースがある
+const postSakuraComment = (comment: string, sendResponse) => {
+  console.log('さくらこめんと', comment);
+
+  const iframeElement = document.querySelector<HTMLIFrameElement>('.pwa-webclient__iframe');
+  if (iframeElement === null) {
+    sendResponse({ message: 'Error: not found irfame...' });
+    return;
+  }
+
+  const p = iframeElement?.contentWindow?.document.querySelector<HTMLElement>('.ProseMirror p');
+
+  if (p === null || p === undefined) {
+    sendResponse({ message: 'Error: not found p...' });
+    return;
+  }
+
+  p.innerText = comment;
+
+  const sendButton = iframeElement?.contentWindow?.document.querySelector<HTMLButtonElement>('.chat-rtf-box__send');
+  sendButton?.click();
+
+  sendResponse({ message: 'Success Sakura Post' });
+};
+
+const addSubscribePageNumber = (iframeElement: HTMLIFrameElement) => {
   if (iframeElement === null) {
     return;
   }
@@ -19,12 +44,19 @@ const addSubscribePageNumber = (iframeElement: HTMLIFrameElement) => {
 
     if (added && removed && added > removed) {
       chrome.storage.sync.get(['sakura'], ({ sakura }) => {
+        console.log('sakura config loaded', sakura);
+        console.log(added, removed, records);
+
         const plantCommentRows = sakura[added];
 
         if (plantCommentRows !== undefined) {
           plantCommentRows.forEach((commentRow) => {
+            console.log('every sakura comment row');
+
             setTimeout(() => {
-              broadcastChannel.postMessage(commentRow.comment);
+              console.log('before send message');
+              chrome.runtime.sendMessage({ command: 'SakuraComment', from: 'slide', comment: commentRow.comment }, messageHandler);
+              // broadcastChannel.postMessage(commentRow.comment);
             }, commentRow.seconds * 1000);
           });
         }
@@ -32,7 +64,8 @@ const addSubscribePageNumber = (iframeElement: HTMLIFrameElement) => {
     }
   });
 
+  console.log('sakura observe');
   observer.observe(observeElement, { subtree: true, childList: true });
 };
 
-export { addSubscribePageNumber };
+export { addSubscribePageNumber, postSakuraComment };

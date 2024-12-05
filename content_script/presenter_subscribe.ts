@@ -1,9 +1,12 @@
+import { postSakuraComment } from '../lib/sakura';
 import { subscribeComments, commentExtractConfig, extractAllComments } from '../lib/subscriber';
 
 console.log('loaded google slide comment stream');
 let commentSubscribed = false;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  console.log(message);
+
   if (message.command === 'Load') {
     const platform = message.platform;
     console.log(message);
@@ -23,5 +26,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
   } else if (message.command === 'Download') {
     extractAllComments(sendResponse);
+  } else if (message.command === 'SakuraComment') {
+    postSakuraComment(message.comment, sendResponse);
   }
 });

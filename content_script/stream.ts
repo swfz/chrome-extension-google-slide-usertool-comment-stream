@@ -17,6 +17,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     removelinkBar(iframeElement);
     chrome.runtime.sendMessage({ command: 'Load', from: 'stream', tabId: message.tabId });
     if (!slidePageSubscribed) {
+      console.log('subscribe page number');
       addSubscribePageNumber(iframeElement);
       slidePageSubscribed = true;
     }
