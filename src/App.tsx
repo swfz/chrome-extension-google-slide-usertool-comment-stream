@@ -16,7 +16,7 @@ function App() {
   const [status, setStatus] = useState<string>();
   const [presenter, setPresenter] = useState<number | null>();
 
-  const platforms: Config['platform'][] = ['gslide'];
+  const platforms: Config['platform'][] = ['gslide', 'zoom'];
   const fonts = ['メイリオ', 'ＭＳ ゴシック', 'ＭＳ 明朝', 'HGS行書体', 'HGP創英角ﾎﾟｯﾌﾟ体'];
 
   const claps = ['none', 'black', 'white', 'pink'];
@@ -51,7 +51,9 @@ function App() {
     }
 
     chrome.storage.sync.set({ config });
-    chrome.tabs.sendMessage(tab.id, { command: 'Load', platform: config?.platform }, (res) => {
+    chrome.tabs.sendMessage(tab.id, { command: 'Load', platform: config?.platform, tabId: tab.id }, (res) => {
+      console.log(res);
+
       setStatus(res.message);
       if (res.screenType === 'presenter') {
         chrome.storage.sync.set({ presenter: tab.id });

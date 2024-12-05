@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "GoogleSlide Comment Stream",
+  "name": "(dev)GoogleSlide Comment Stream",
   "version": "4.0.3",
   "permissions": ["storage", "downloads"],
   "background": {
@@ -10,7 +10,12 @@
     {
       "matches": ["https://docs.google.com/presentation/d/*/edit"],
       "match_about_blank": true,
-      "js": ["content_script/stream.ts", "content_script/presenter_subscribe.ts"]
+      "js": ["content_script/stream.ts"]
+    },
+    {
+      "matches": ["https://app.zoom.us/wc/*"],
+      "match_about_blank": true,
+      "js": ["content_script/presenter_subscribe.ts"]
     },
     {
       "matches": ["https://docs.google.com/presentation/d/e/*/askquestion?*"],

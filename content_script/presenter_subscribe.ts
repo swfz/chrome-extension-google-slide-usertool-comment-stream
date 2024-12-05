@@ -7,11 +7,14 @@ const selectors = {
     listNodeSelector: '.punch-viewer-speaker-questions',
     extractFn: (el) => el.children[1].children[2],
   },
-}
+  zoom: {
+    commentNodeClassName: 'ReactVirtualized__Grid__innerScrollContainer',
+    listNodeSelector: '.ReactVirtualized__Grid__innerScrollContainer',
+    extractFn: (el) => el.querySelector('.new-chat-message__text-content'),
+  },
+};
 
 const subscribeComments = (platform, observeElement, sendResponse) => {
-  const broadcastChannel = new BroadcastChannel('comment_channel');
-
   const extractComment = (mutationRecords: MutationRecord[]): string[] => {
     console.log(mutationRecords);
     const nodes = mutationRecords
@@ -32,7 +35,7 @@ const subscribeComments = (platform, observeElement, sendResponse) => {
   };
 
   const observer = new MutationObserver(function (records) {
-    broadcastChannel.postMessage(extractComment(records));
+    chrome.runtime.sendMessage({ command: 'SendSubscribedComments', comments: extractComment(records) });
   });
 
   observer.observe(observeElement, { subtree: true, childList: true });
@@ -64,17 +67,27 @@ const extractAllComments = (sendResponse) => {
 };
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  const platform = message.platform;
-  const observeElement = document.querySelector<HTMLDivElement>(selectors[platform].listNodeSelector);
-
-  if (observeElement === null) {
-    return;
-  }
-
   if (message.command === 'Load') {
+    const platform = message.platform;
+    console.log('platform', platform);
+    console.log(message);
+
+    // const observeElement = document.querySelector<HTMLDivElement>(selectors[platform].listNodeSelector);
+    const observeElement = document
+      .querySelector('.pwa-webclient__iframe')
+      ?.contentWindow.document.querySelector(selectors[platform].listNodeSelector);
+
+    console.log(observeElement);
+
+    if (observeElement === null) {
+      console.log('not found node');
+
+      return;
+    }
     if (!commentSubscribed) {
       subscribeComments(platform, observeElement, sendResponse);
       console.log('subscribe presenter usertool started');
+      chrome.runtime.sendMessage({ command: 'Load', from: 'subscriber', tabId: message.tabId });
     }
   } else if (message.command === 'Download') {
     extractAllComments(sendResponse);
