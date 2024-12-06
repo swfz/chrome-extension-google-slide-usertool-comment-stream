@@ -35,6 +35,8 @@ const commentElementStyle = (config, windowWidth, top) => {
 };
 const clapElementStyle = (bottom, right) => {
   return {
+    width: '100px',
+    height: '100px',
     position: 'absolute',
     bottom: `${bottom}px`,
     right: `${right}px`,

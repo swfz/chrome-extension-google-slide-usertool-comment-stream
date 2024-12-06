@@ -1,4 +1,4 @@
-import { messageHandler } from '../lib/util';
+import { info, messageHandler } from '../lib/util';
 
 let subscriberTabId;
 let streamTabId;
@@ -17,17 +17,15 @@ chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
   if (req.command === 'SendSubscribedComments') {
     console.log(streamTabId);
     chrome.tabs.sendMessage(streamTabId, { command: req.command, comments: req.comments });
-    // chrome.tabs.sendMessage(subscriberTabId, { command: 'debug subscriber', comments: req.comments });
   }
 
   if (req.command === 'SakuraComment') {
-    console.log('sakura', req);
+    info('sakura', req);
+    // console.log('sakura', req);
     chrome.tabs.sendMessage(subscriberTabId, { command: req.command, comment: req.comment }, messageHandler);
     sendResponse({ message: 'send' });
   }
 
-  // console.log(sender);
-  // console.log(sendResponse);
   return true;
 });
 

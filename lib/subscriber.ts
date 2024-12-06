@@ -1,6 +1,9 @@
+import { info } from './util';
+
 interface Extractor {
-  commentNodeClassName: string;
-  listNodeSelector: string;
+  commentNodeClassName: string; // migrationしたら不要
+  listNodeSelector: string; // migrationしたら不要
+  isTargetElement: (el: HTMLElement) => boolean;
   listNodeExtractFn: () => HTMLElement | null | undefined;
   commentExtractFn: (el: HTMLElement) => string | null | undefined;
 }
@@ -12,21 +15,36 @@ const commentExtractConfig: CommentExtractorConfig = {
   gslide: {
     commentNodeClassName: 'punch-viewer-speaker-questions',
     listNodeSelector: '.punch-viewer-speaker-questions',
+    isTargetElement: (el) => false,
     listNodeExtractFn: () => null,
     commentExtractFn: (el) => el.children[1].children[2]['innnerText'],
   },
   zoom: {
     commentNodeClassName: 'ReactVirtualized__Grid__innerScrollContainer',
     listNodeSelector: '.ReactVirtualized__Grid__innerScrollContainer',
+    isTargetElement: (el) => {
+      return ['ReactVirtualized__Grid__innerScrollContainer', 'eactVirtualized__Grid ReactVirtualized__List chat-virtualized-list'].some(
+        (className) => {
+          return el.className.match(className);
+        },
+      );
+    },
     listNodeExtractFn: () => {
       const iframeElement = document.querySelector<HTMLIFrameElement>('.pwa-webclient__iframe');
       if (iframeElement === null) {
         return null;
       }
 
-      return iframeElement.contentWindow?.document.querySelector('.ReactVirtualized__Grid__innerScrollContainer');
+      return iframeElement.contentWindow?.document.querySelector('.chat-container__chat-list');
     },
-    commentExtractFn: (el) => el.querySelector<HTMLElement>('.new-chat-message__text-content')?.innerText,
+    commentExtractFn: (el) => {
+      const commentContainer = el.querySelector<HTMLElement>('.new-chat-message__container');
+      if (commentContainer === null) return '';
+
+      console.log(commentContainer);
+
+      return commentContainer.getAttribute('aria-label')?.split(', ').at(-1);
+    },
   },
 };
 
@@ -36,12 +54,12 @@ const subscribeComments = (platform, observeElement, sendResponse) => {
       .filter((record) => {
         const element = record.target as Element;
 
-        return element.className === commentExtractConfig[platform].commentNodeClassName;
+        return commentExtractConfig[platform].isTargetElement(element);
       })
       .map((record) => record.addedNodes[0]);
 
     const comments = Array.from(nodes).map((node) => commentExtractConfig[platform].commentExtractFn(node));
-    console.log(comments);
+    info(comments);
     return comments;
   };
 
@@ -52,6 +70,8 @@ const subscribeComments = (platform, observeElement, sendResponse) => {
   observer.observe(observeElement, { subtree: true, childList: true });
 
   sendResponse({ screenType: 'presenter', message: 'A listener has been added to the Comment side.' });
+
+  return observer;
 };
 
 // TODO: downloaderとかに移動

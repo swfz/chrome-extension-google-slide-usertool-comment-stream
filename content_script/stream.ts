@@ -66,7 +66,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         renderClaps(claps, p, clapElement, clapElementBottom, clapElementRight, config);
       }
       comments.forEach((comment) => addComment(comment, boxElement, containerHeight, config));
-      // console.log('before onmessage');
     });
   }
 });
