@@ -1,5 +1,4 @@
-import { rejects } from 'assert';
-import { resolve } from 'path';
+import { log } from 'console';
 
 const messageHandler = (response) => {
   if (chrome.runtime.lastError) {
@@ -9,28 +8,26 @@ const messageHandler = (response) => {
   }
 };
 
-const runtimeSendMessage = (message) => {
-  return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage(message, (response) => {
-      if (chrome.runtime.lastError) {
-        reject(chrome.runtime.lastError);
-      } else {
-        resolve(response);
-      }
-    });
-  });
+// const getFromStoragePromise = (key) => {
+//    new Promise((resolve, reject) => {
+//     chrome.storage.sync.get([key], (result) => {
+//       if (chrome.runtime.lastError) {
+//         reject(chrome.runtime.lastError);
+//       } else {
+//         resolve(result);
+//       }
+//     });
+//   });
+// };
+
+// const getFromStorage = async(key) => {
+//   return (await getFromStoragePromise(key))[0][key]
+// }
+
+const info = (...args) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(args);
+  }
 };
 
-const getFromStorage = (keys) => {
-  return new Promise((resolve, reject) => {
-    chrome.storage.sync.get(keys, (result) => {
-      if (chrome.runtime.lastError) {
-        reject(chrome.runtime.lastError);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-};
-
-export { messageHandler, runtimeSendMessage, getFromStorage };
+export { messageHandler, info };

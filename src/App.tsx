@@ -16,6 +16,7 @@ function App() {
   const [status, setStatus] = useState<string>();
   const [presenter, setPresenter] = useState<number | null>();
 
+  const isDev = process.env.NODE_ENV === 'development';
   const platforms: Config['platform'][] = ['gslide', 'zoom'];
   const fonts = ['メイリオ', 'ＭＳ ゴシック', 'ＭＳ 明朝', 'HGS行書体', 'HGP創英角ﾎﾟｯﾌﾟ体'];
 
@@ -222,7 +223,7 @@ function App() {
         <br />
         <button onClick={handleStart}>Start</button>
         {presenter ? <button onClick={handleDownloadComments}>DownloadComments</button> : ''}
-        <button onClick={sampleComments}>Sample</button>
+        {isDev ? <button onClick={sampleComments}>Sample</button> : ''}
         <div>{status}</div>
       </header>
     </div>
