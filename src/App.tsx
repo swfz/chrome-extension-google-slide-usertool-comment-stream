@@ -90,13 +90,13 @@ function App() {
   useEffect(() => {
     (async () => {
       chrome.storage.sync.get(['config'], ({ config }) => {
-        setConfig(config);
+        setConfig(config as Config | undefined);
       });
 
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
       chrome.storage.sync.get(['presenter'], ({ presenter }) => {
         if (tab.id === presenter) {
-          setPresenter(presenter);
+          setPresenter(presenter as number);
         } else {
           setPresenter(null);
         }
